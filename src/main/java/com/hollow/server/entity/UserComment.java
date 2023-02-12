@@ -1,9 +1,12 @@
 package com.hollow.server.entity;
 
+import org.hibernate.annotations.Proxy;
+
 import jakarta.persistence.Entity;
 import lombok.Data;
 
 @Entity
+@Proxy(lazy = false)
 @Data
 public class UserComment {
     /* 

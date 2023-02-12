@@ -1,11 +1,15 @@
 package com.hollow.server.entity;
 
 import java.sql.Date;
+
+import org.hibernate.annotations.Proxy;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Entity;
 import lombok.Data;
 
 @Entity
+@Proxy(lazy = false)
 @Data
 public class Post {
     protected long pid;
