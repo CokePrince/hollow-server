@@ -11,9 +11,8 @@
 	<groupId>com.hollow</groupId>
 	<artifactId>server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
 	<name>hollow-server</name>
-	<description>An online community powered by Spring Boot</description>
+	<description>The software running on server supporting mobile app Hollow (Shudong in Hanyu Pinyin).</description>
 	<properties>
 		<java.version>19</java.version>
 	</properties>
@@ -41,11 +40,6 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
