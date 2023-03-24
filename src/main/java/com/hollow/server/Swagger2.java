@@ -1,4 +1,4 @@
-package com.luti;
+package com.hollow.server;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,7 +38,7 @@ public class Swagger2 {
                 .apiInfo(apiInfo())
                 .select()
                 // 自行修改为自己的包路径
-                .apis(RequestHandlerSelectors.basePackage("com.luti"))
+                .apis(RequestHandlerSelectors.basePackage("com.hollow.server"))
                 .paths(PathSelectors.any())
                 .build();
     }
@@ -52,7 +52,7 @@ public class Swagger2 {
      */
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("都成科技录题系统接口")
+                .title("")
                 .contact(
                         new Contact(
                                 "蒋大大",
@@ -60,7 +60,7 @@ public class Swagger2 {
                                 "duangyuyong@foxmail.com")
                 )
                 .description("同一以ApiResult格式作为返回参数")
-                .termsOfServiceUrl("http://localhost:9898/doc.html")
+                .termsOfServiceUrl("http://localhost:8080/doc.html")
                 .version("1.0")
                 .build();
     }

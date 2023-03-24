@@ -23,7 +23,9 @@ public class PostSeenByGuest extends Post {
     @Autowired
     PostMapper postMapper;
 
-    public PostSeenByGuest() {}
+    public PostSeenByGuest() {
+
+    }
 
     public List<PostSeenByGuest> postToList(List<Post> postList) {
         

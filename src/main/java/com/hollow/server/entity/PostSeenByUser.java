@@ -25,7 +25,9 @@ public class PostSeenByUser extends Post {
     @Autowired
     PostMapper postMapper;
 
-    public PostSeenByUser() {}
+    public PostSeenByUser() {
+
+    }
 
     public List<PostSeenByUser> postToList(List<Post> postList, long uid) {
         

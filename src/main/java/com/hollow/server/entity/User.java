@@ -2,17 +2,25 @@ package com.hollow.server.entity;
 
 import java.sql.Date;
 
+import org.hibernate.annotations.Proxy;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import lombok.Data;
 
 @Entity
+@Proxy(lazy = false)
 @Data
+@Table(name="user")
 public class User {
-    
-    private long uid;
+
+    @Id
+    private Long uid;
 
     @Column(unique = true)
     private String email;

@@ -5,9 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.hollow.server.entity.PostSeenByUser;
 import com.hollow.server.entity.PostSeenByGuest;
 import com.hollow.server.service.PostService;
@@ -27,7 +26,7 @@ public class PostController {
     PostMapper postMapper;
 
     @PostMapping("/publish")
-    public ResponseHelper<Long> publish(@RequestBody long id, @RequestBody String text, @RequestBody int w_id, @RequestBody int m_id, @RequestBody long time) {
+    public ResponseHelper<Long> publish(@RequestParam long id, @RequestParam String text, @RequestParam int w_id, @RequestParam int m_id, @RequestParam long time) {
         if (text == null) {
             return ResponseHelper.error(ResponseCode.WRONG_REQUEST);
         }
@@ -39,7 +38,7 @@ public class PostController {
     }
 
     @PostMapping("/comment")
-    public ResponseHelper<PostSeenByUser> comment(@RequestBody long p_id, @RequestBody long id, @RequestBody int c_id) {
+    public ResponseHelper<PostSeenByUser> comment(@RequestParam long p_id, @RequestParam long id, @RequestParam int c_id) {
         try {
             return new ResponseHelper<>(postService.comment(id, p_id, c_id));
         } catch (Exception e) {
@@ -48,7 +47,7 @@ public class PostController {
     }
 
     @PostMapping("/collect")
-    public ResponseHelper<PostSeenByUser> comment(@RequestBody long p_id, @RequestBody long id) {
+    public ResponseHelper<PostSeenByUser> comment(@RequestParam long p_id, @RequestParam long id) {
         try {
             return new ResponseHelper<>(postService.collect(id, p_id));
         } catch (Exception e) {
@@ -57,7 +56,7 @@ public class PostController {
     }
 
     @PostMapping("/history")
-    public ResponseHelper<List<PostSeenByUser>> historyPost(@RequestBody long id, @RequestBody int offset) {
+    public ResponseHelper<List<PostSeenByUser>> historyPost(@RequestParam long id, @RequestParam int offset) {
         try {
             return new ResponseHelper<>(new PostSeenByUser().postToList(postMapper.getHistoryPost(id, offset), id));
         } catch (Exception e) {
@@ -66,7 +65,7 @@ public class PostController {
     }
 
     @PostMapping("/collection")
-    public ResponseHelper<List<PostSeenByUser>> collectionPost(@RequestBody long id, @RequestBody int offset) {
+    public ResponseHelper<List<PostSeenByUser>> collectionPost(@RequestParam long id, @RequestParam int offset) {
         try {
             return new ResponseHelper<>(new PostSeenByUser().commentToList(postMapper.getCollectionPost(id,offset), id));
         } catch (Exception e) {
@@ -75,7 +74,7 @@ public class PostController {
     }
     
     @PostMapping("/serch_mine")
-    public ResponseHelper<List<PostSeenByUser>> searchHistory(@RequestBody long id, @RequestBody String keyword) {
+    public ResponseHelper<List<PostSeenByUser>> searchHistory(@RequestParam long id, @RequestParam String keyword) {
         try {
             return new ResponseHelper<>(new PostSeenByUser().postToList(postMapper.searchHistoryPost(id, keyword), id));
         } catch (Exception e) {
@@ -84,7 +83,7 @@ public class PostController {
     }
 
     @PostMapping("/fetch")
-    public ResponseHelper<List<PostSeenByUser>> fetch(@RequestBody long id, @RequestBody int offset) {
+    public ResponseHelper<List<PostSeenByUser>> fetch(@RequestParam long id, @RequestParam int offset) {
         try {
             return new ResponseHelper<>(new PostSeenByUser().postToList(postMapper.fetchPost(offset), id));
         } catch (Exception e) {
@@ -92,8 +91,8 @@ public class PostController {
         }
     }
 
-    @PostMapping("/fetch")
-    public ResponseHelper<List<PostSeenByGuest>> fetchOut(@RequestBody long id, @RequestBody int offset) {
+    @PostMapping("/fetchout")
+    public ResponseHelper<List<PostSeenByGuest>> fetchOut(@RequestParam long id, @RequestParam int offset) {
         try {
             return new ResponseHelper<>(new PostSeenByGuest().postToList(postMapper.fetchPost(offset)));
         } catch (Exception e) {

@@ -3,11 +3,7 @@ package com.hollow.server.web;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.hollow.server.mapper.UserMapper;
 import com.hollow.server.service.*;
@@ -24,14 +20,14 @@ public class UserController {
     UserMapper userMapper;
     
     @PostMapping("/signup")
-    public ResponseHelper<Long> signup(@RequestBody String email, @RequestBody String name, @RequestBody String password, @RequestBody int role) {
+    public ResponseHelper<Long> signup(@RequestParam String email, @RequestParam String name, @RequestParam String password, @RequestParam int role) {
         if ((email == null) || (email.isEmpty()) || (!Pattern.matches("^(\\w+([-.][A-Za-z0-9]+)*){3,18}@\\w+([-.][A-Za-z0-9]+)*\\.\\w+([-.][A-Za-z0-9]+)*$", email))) {
             return ResponseHelper.error(ResponseCode.WRONG_EMAIL);
-        } else if (userMapper.signupCheckEmail(email) != null) {
+        } else if (userMapper.signupCheckEmail(email).get(0) != null) {
             return ResponseHelper.error(ResponseCode.EMAIL_USED_ALREADY);
-        } else if ((name == null) || (name.isEmpty()) || (Pattern.matches("^(\\w+([-.][A-Za-z0-9]+)*){3,18}@\\w+([-.][A-Za-z0-9]+)*\\.\\w+([-.][A-Za-z0-9]+)*$", name))) {
+        } else if ((name == null) || (name.isEmpty()) ) {
             return ResponseHelper.error(ResponseCode.WRONG_NAME);
-        } else if (userMapper.signupCheckName(name) != null) {
+        } else if (userMapper.signupCheckName(name).get(0) != null) {
             return ResponseHelper.error(ResponseCode.NAME_USED_ALREADY);
         } else if ((password == null) || (password.isEmpty())) {
             return ResponseHelper.error(ResponseCode.EMPTY_PASSWORD);
@@ -47,9 +43,9 @@ public class UserController {
     }
 
     @PostMapping("/signin")
-    public ResponseHelper<Long> signin(@RequestBody String identity, @RequestBody String password) {
+    public ResponseHelper<Long> signin(@RequestParam String identity, @RequestParam String password) {
         try {
-            if (userMapper.userSigninCheck(identity) == null) {
+            if (userMapper.userSigninCheck(identity).get(0) == null) {
                 return ResponseHelper.error(ResponseCode.USER_NOT_EXIST);
             } else if (userMapper.userSigninCheck(identity).get(0).getLogin() == 1) {
                 return ResponseHelper.error(ResponseCode.LOGGED_ON_ALREADY);
@@ -62,7 +58,7 @@ public class UserController {
     }
 
     @GetMapping("/logout")
-    public ResponseHelper<Long> logout(@RequestBody long id) {
+    public ResponseHelper<Long> logout(@RequestParam long id) {
         try {
             userMapper.userLogout(id);
             return ResponseHelper.error(ResponseCode.SUCCESS);
@@ -72,7 +68,7 @@ public class UserController {
     }
 
     @PostMapping("/editpassword")
-    public ResponseHelper<Long> editPassword(@RequestBody long id, @RequestBody String password, @RequestBody String password_new) {
+    public ResponseHelper<Long> editPassword(@RequestParam long id, @RequestParam String password, @RequestParam String password_new) {
         if ((password_new == null) || (password_new.isEmpty())) {
             return ResponseHelper.error(ResponseCode.EMPTY_PASSWORD);
         }
@@ -84,7 +80,7 @@ public class UserController {
     }
 
     @PostMapping("/editemail")
-    public ResponseHelper<Long> editEmail(@RequestBody long id, @RequestBody String password, @RequestBody String email) {
+    public ResponseHelper<Long> editEmail(@RequestParam long id, @RequestParam String password, @RequestParam String email) {
         if ((email == null) || (email.isEmpty()) || (!Pattern.matches("^(\\w+([-.][A-Za-z0-9]+)*){3,18}@\\w+([-.][A-Za-z0-9]+)*\\.\\w+([-.][A-Za-z0-9]+)*$", email))) {
             return ResponseHelper.error(ResponseCode.WRONG_EMAIL);
         }
